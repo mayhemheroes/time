@@ -1,0 +1,28 @@
+[package]
+name = "time-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.time]
+path = "../.."
+features = ["parsing"]
+
+# Prevent this from interfering with workspaces
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "parsing"
+path = "fuzz_targets/parsing.rs"
+test = false
+doc = false
+
+[profile.release]
+debug = true
